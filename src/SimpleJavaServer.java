@@ -2,11 +2,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class SimpleJavaServer {
-
+//10 + 20
     public static void main(String[] args) 	{
         try {
+            String [] expressao=null;
             ServerSocket s = new ServerSocket(9999);
             String str;
             while (true) {
@@ -15,8 +17,27 @@ public class SimpleJavaServer {
                 OutputStream o = c.getOutputStream();
                 do {
                     byte[] line = new byte[100];
-                    i.read(line);
-                    str = new String(line);
+                    i.read(line);//Pega linha enviada pelo cliente
+                    str = new String(line).trim();
+                    System.out.println(str);
+                    expressao=str.split(" ");
+                    System.out.println(Arrays.toString(Arrays.stream(expressao).toArray()));
+                    System.out.println(expressao[1]);
+                    Calculadora calc = null;
+                    float result = 0.0F;
+                    switch (expressao[1].charAt(0)){
+
+                //        result=new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
+
+                        case '+':
+                            result=new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
+                            break;
+
+                        default:
+
+                    }
+                    System.out.println(result);
+                    o.write(Float.toString(result).getBytes());//Envia resultado para o cliente
                     if (str.trim().equals("Thomas"))
                         o.write("Rabelo".getBytes());
                     str = new String(line);

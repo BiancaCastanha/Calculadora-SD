@@ -1,6 +1,7 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class SimpleJavaClient {
 
@@ -13,9 +14,10 @@ public class SimpleJavaClient {
             do {
                 byte[] line = new byte[100];
                 System.in.read(line);
-                o.write(line);
-                i.read(line);
-                str = new String(line);
+                o.write(line); //mandando para o servidor
+                Arrays.fill(line, (byte)0);
+                i.read(line); //recebendo do servidor
+                str = new String(line).trim();
                 System.out.println(str.trim());
             } while ( !str.trim().equals("bye") );
             s.close();
