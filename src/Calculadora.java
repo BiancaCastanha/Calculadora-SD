@@ -36,5 +36,7 @@ public class Calculadora {
     public float soma(){
         return getN1()+getN2();
     }
-
+    public float subtracao(){ return getN1()-getN2();}
+    public float multiplicacao(){ return getN1()*getN2();}
+    public float divisao(){return getN1()/getN2();}
 }

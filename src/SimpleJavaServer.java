@@ -23,24 +23,31 @@ public class SimpleJavaServer {
                     expressao=str.split(" ");
                     System.out.println(Arrays.toString(Arrays.stream(expressao).toArray()));
                     System.out.println(expressao[1]);
-                    Calculadora calc = null;
                     float result = 0.0F;
                     switch (expressao[1].charAt(0)){
 
                 //        result=new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
 
                         case '+':
-                            result=new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
+                            result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
                             break;
+                        case '-':
+                            result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).subtracao();
+                        case '*':
+                            result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).multiplicacao();
+                        case '/':
+                            if (Float.parseFloat(expressao[2])==0) {
+                                System.out.println("ERRO\nNAO EH POSSÍVEL DIVIDIR POR 0");
+                            }else {
+                                result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).divisao();
+                            }
 
                         default:
 
                     }
                     System.out.println(result);
                     o.write(Float.toString(result).getBytes());//Envia resultado para o cliente
-                    if (str.trim().equals("Thomas"))
-                        o.write("Rabelo".getBytes());
-                    str = new String(line);
+
                 } while ( !str.trim().equals("bye") );
                 c.close();
             }
