@@ -24,6 +24,7 @@ public class SimpleJavaServer {
                     System.out.println(Arrays.toString(Arrays.stream(expressao).toArray()));
                     System.out.println(expressao[1]);
                     float result = 0.0F;
+                    String erro=null;
                     switch (expressao[1].charAt(0)){
 
                 //        result=new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).soma();
@@ -37,7 +38,7 @@ public class SimpleJavaServer {
                             result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).multiplicacao();
                         case '/':
                             if (Float.parseFloat(expressao[2])==0) {
-                                System.out.println("ERRO\nNAO EH POSSÍVEL DIVIDIR POR 0");
+                                erro="ERRO\nNAO EH POSSÍVEL DIVIDIR POR 0";
                             }else {
                                 result = new Calculadora(Float.parseFloat(expressao[0]), Float.parseFloat(expressao[2])).divisao();
                             }
@@ -46,7 +47,12 @@ public class SimpleJavaServer {
 
                     }
                     System.out.println(result);
-                    o.write(Float.toString(result).getBytes());//Envia resultado para o cliente
+                    if (erro==null){
+                        o.write(Float.toString(result).getBytes());//Envia resultado para o cliente
+                    }else{
+                        o.write(erro.getBytes());
+                    }
+
 
                 } while ( !str.trim().equals("bye") );
                 c.close();
